@@ -23,144 +23,180 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.krossmanzs.learnonboardingappjetpackcompose.ui.theme.LearnOnboardingAppJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val onBoardingNav = "onBoardingScreen"
+    private val loginNav = "loginScreen"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainLayout()
+            BaseLayout()
         }
     }
-}
 
-@Composable
-fun MainLayout() {
+    @Composable
+    fun BaseLayout() {
+        val naviController = rememberNavController()
 
-    val primaryColor = Color(26,32,53,255)
-    val abrilface = FontFamily(
-        Font(R.font.abrilfatface)
-    )
-    val pacifico = FontFamily(
-        Font(R.font.pacifico)
-    )
+        NavHost(navController = naviController, startDestination = onBoardingNav) {
+            composable(route = onBoardingNav) {
+                MainLayout(naviController)
+            }
+            composable(route = loginNav) {
+                LoginLayout(naviController)
+            }
+        }
+
+    }
+
+    @Composable
+    fun MainLayout(naviController: NavController) {
+
+        val primaryColor = Color(26,32,53,255)
+        val abrilface = FontFamily(
+            Font(R.font.abrilfatface)
+        )
+        val pacifico = FontFamily(
+            Font(R.font.pacifico)
+        )
 
 
-    LearnOnboardingAppJetpackComposeTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            color = MaterialTheme.colors.background
-        ) {
-            Column(
-                modifier = Modifier
-                    .background(color = primaryColor)
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
+        LearnOnboardingAppJetpackComposeTheme {
+            // A surface container using the 'background' color from the theme
+            Surface(
+                color = MaterialTheme.colors.background
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 100.dp)
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_baseline_accessible_24),
-                        contentDescription = null,
-                        alignment = Alignment.TopEnd,
-                        modifier = Modifier
-                            .size(300.dp)
-                    )
-                }
                 Column(
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .background(color = primaryColor)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Spacer(modifier = Modifier
-                        .background(color = Color.White)
-                        .height(3.dp)
-                        .width(150.dp)
-                        .padding(bottom = 20.dp)
-                    )
-                    Spacer(modifier = Modifier
-                        .padding(bottom = 20.dp)
-                    )
-                    Spacer(modifier = Modifier
-                        .background(color = Color.White)
-                        .height(3.dp)
-                        .width(240.dp)
-                    )
-                }
-                Column(
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start,
-                    modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp)
-                ) {
-                    Text(
-                        text = "Searching for a job?",
-                        textAlign = TextAlign.Start,
-                        fontFamily = abrilface,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 35.sp,
-                        color = Color.White
-                    )
-                    Spacer(modifier = Modifier
-                        .padding(bottom = 15.dp)
-                    )
-                    Text(
-                        text = "Undoubtedly you're in the right place",
-                        textAlign = TextAlign.Start,
-                        fontFamily = pacifico,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        color = Color(0xBAFFFFFF)
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 100.dp)
-                ) {
-                    Button(onClick = { /*TODO*/ },
-                        border = BorderStroke(2.dp, Color.White),
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End,
                         modifier = Modifier
-                            .width(150.dp),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = primaryColor
-                        )
+                            .fillMaxWidth()
+                            .padding(top = 100.dp)
                     ) {
-                        Text(text = "LOGIN", color = Color.White)
+                        Image(
+                            painter = painterResource(R.drawable.ic_baseline_accessible_24),
+                            contentDescription = null,
+                            alignment = Alignment.TopEnd,
+                            modifier = Modifier
+                                .size(300.dp)
+                        )
                     }
-                    Button(onClick = { /*TODO*/ },
-                        border = BorderStroke(2.dp, primaryColor),
+                    Column(
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start,
                         modifier = Modifier
-                            .width(150.dp),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color.White
-                        )
+                            .fillMaxWidth()
                     ) {
-                        Text(text = "JOIN NOW", color = primaryColor)
+                        Spacer(modifier = Modifier
+                            .background(color = Color.White)
+                            .height(3.dp)
+                            .width(150.dp)
+                            .padding(bottom = 20.dp)
+                        )
+                        Spacer(modifier = Modifier
+                            .padding(bottom = 20.dp)
+                        )
+                        Spacer(modifier = Modifier
+                            .background(color = Color.White)
+                            .height(3.dp)
+                            .width(240.dp)
+                        )
+                    }
+                    Column(
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start,
+                        modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                    ) {
+                        Text(
+                            text = "Searching for a job?",
+                            textAlign = TextAlign.Start,
+                            fontFamily = abrilface,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 35.sp,
+                            color = Color.White
+                        )
+                        Spacer(modifier = Modifier
+                            .padding(bottom = 15.dp)
+                        )
+                        Text(
+                            text = "Undoubtedly you're in the right place",
+                            textAlign = TextAlign.Start,
+                            fontFamily = pacifico,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            color = Color(0xBAFFFFFF)
+                        )
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 100.dp)
+                    ) {
+                        Button(onClick = { naviController.navigate(loginNav) },
+                            border = BorderStroke(2.dp, Color.White),
+                            modifier = Modifier
+                                .width(150.dp),
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = primaryColor
+                            )
+                        ) {
+                            Text(text = "LOGIN", color = Color.White)
+                        }
+                        Button(onClick = { /*TODO*/ },
+                            border = BorderStroke(2.dp, primaryColor),
+                            modifier = Modifier
+                                .width(150.dp),
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.White
+                            )
+                        ) {
+                            Text(text = "JOIN NOW", color = primaryColor)
+                        }
                     }
                 }
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    LearnOnboardingAppJetpackComposeTheme {
-        MainLayout()
+    @Composable
+    fun LoginLayout(naviController: NavController) {
+
+    }
+
+    @Preview(showBackground = true, showSystemUi = true)
+    @Composable
+    fun DefaultPreview() {
+        LearnOnboardingAppJetpackComposeTheme {
+            MainLayout(naviController = NavController(this))
+        }
+    }
+
+    @Preview(showBackground = true, showSystemUi = true)
+    @Composable
+    fun LoginPreview() {
+        LearnOnboardingAppJetpackComposeTheme {
+            LoginLayout(naviController = NavController(this))
+        }
     }
 }
